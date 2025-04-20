@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGA TOUR Live Tracker</title>
+    <style>
+        #pga-tour-widget-container * {
+            box-sizing: border-box !important;
+        }
+        #pga-tour-widget-container .pga-widget-tab-content {
+            display: none !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+        #pga-tour-widget-container .pga-widget-tab-content.active {
+            display: block !important;
+            z-index: 2 !important;
+        }
+        #pga-tour-widget-container .pga-widget-nav {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            padding: 16px !important;
+            background-color: #f5f5f5 !important;
+            gap: 10px !important;
+            z-index: 10001 !important;
+            position: relative !important;
+        }
+        #pga-tour-widget-container .pga-widget-nav-btn {
+            cursor: pointer !important;
+            z-index: 10002 !important;
+            transition: all 0.3s ease !important;
+            background: linear-gradient(135deg, #0A3559 0%, #1A4569 100%) !important;
+            color: white !important;
+            border: 1px solid #F7B432 !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+            border-radius: 10px !important;
+            flex: 1 !important;
+            min-width: 110px !important;
+            text-align: center !important;
+            padding: 15px 10px !important;
+            margin: 0 !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            pointer-events: auto !important;
+        }
+        #pga-tour-widget-container .pga-widget-nav-btn:hover,
+        #pga-tour-widget-container .pga-widget-nav-btn:focus {
+            background: linear-gradient(135deg, #1A4569 0%, #0A3559 100%) !important;
+            transform: scale(1.05) !important;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3) !important;
+            outline: none !important;
+        }
+        #pga-tour-widget-container .pga-widget-nav-btn.active {
+            background: linear-gradient(135deg, #F7B432 0%, #D89E2A 100%) !important;
+            color: #0A3559 !important;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3) !important;
+        }
+        #pga-tour-widget-container .pga-widget-ad-container {
+            padding: 15px !important;
+            background-color: #f9f9f9 !important;
+            text-align: center !important;
+            border-top: 1px solid #eee !important;
+            border-bottom: 1px solid #eee !important;
+            margin: 20px 0 !important;
+        }
+        #pga-tour-widget-container .pga-widget-header {
+            background: linear-gradient(135deg, #0A3559 0%, #1A4569 100%) !important;
+            color: white !important;
+            padding: 30px 20px !important;
+            text-align: center !important;
+            border-bottom: 4px solid #F7B432 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        }
+        #pga-tour-widget-container .pga-widget-logo {
+            width: 100px !important;
+            height: 100px !important;
+            margin: 0 auto 20px !important;
+            background-color: white !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: transform 0.3s ease !important;
+            overflow: hidden !important;
+            border: 2px solid #F7B432 !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25) !important;
+        }
+        #pga-tour-widget-container .pga-widget-logo:hover {
+            animation: bounceAndSpin 0.6s ease !important;
+        }
+        @keyframes bounceAndSpin {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(15deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        #pga-tour-widget-container .pga-widget-logo svg {
+            width: 85% !important;
+            height: 85% !important;
+        }
+        #pga-tour-widget-container .pga-widget-title {
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            color: #F7B432 !important;
+            margin: 0 !important;
+        }
+        #pga-tour-widget-container .pga-widget-subtitle {
+            font-size: 20px !important;
+            font-weight: 400 !important;
+            color: #FFFFFF !important;
+            opacity: 0.9 !important;
+            margin-top: 8px !important;
+        }
+        @media (max-width: 768px) {
+            #pga-tour-widget-container .pga-widget-nav {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            #pga-tour-widget-container .pga-widget-nav-btn {
+                min-width: 100% !important;
+                font-size: 14px !important;
+                padding: 12px !important;
+            }
+            #pga-tour-widget-container .pga-widget-iframe-container {
+                height: 600px !important;
+            }
+            #pga-tour-widget-container .pga-widget-title {
+                font-size: 24px !important;
+            }
+            #pga-tour-widget-container .pga-widget-subtitle {
+                font-size: 16px !important;
+            }
+            #pga-tour-widget-container .pga-widget-logo {
+                width: 80px !important;
+                height: 80px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <p><span style="background-color: #ffffff; color: #000000;">This post provides basic information on the PGA TOUR live leaderboard, tournament schedule, players' performances, FedExCup rankings, and PGA Tour Info.</span></p>
+    <p style="text-align: center;"><img src="https://via.placeholder.com/550x550.webp?text=PGA+TOUR+Live+Leaderboard+Image" alt="PGA TOUR Live Leaderboard" style="max-width: 550px; height: auto; border-radius: 8px;"></p>
+
+    <div id="pga-tour-widget-container" style="max-width: 1000px; margin: 20px auto; background-color: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden; font-family: 'Segoe UI', Roboto, Arial, sans-serif; border: 1px solid #e0e0e0;">
+        <div class="pga-widget-header">
+            <div class="pga-widget-logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 골프공 디자인: 촘촘한 딤플 패턴 -->
+                    <circle cx="50" cy="50" r="45" fill="#FFFFFF" stroke="#0A3559" stroke-width="2"/>
+                    <!-- 딤플 패턴 (더 촘촘히) -->
+                    <circle cx="35" cy="25" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="50" cy="25" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="65" cy="25" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="30" cy="40" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="45" cy="40" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="60" cy="40" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="70" cy="40" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="35" cy="55" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="50" cy="55" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="65" cy="55" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="40" cy="70" r="2.5" fill="#D9D9D9"/>
+                    <circle cx="60" cy="70" r="2.5" fill="#D9D9D9"/>
+                    <!-- 중앙 이모티콘 스타일 -->
+                    <circle cx="50" cy="50" r="15" fill="#F7B432" opacity="0.2"/>
+                </svg>
+            </div>
+            <h1 class="pga-widget-title">PGA TOUR LIVE LEADERBOARD</h1>
+            <div class="pga-widget-subtitle">Current Tournament: RBC Heritage</div>
+        </div>
+
+        <div class="pga-widget-nav">
+            <button id="btn-leaderboard" class="pga-widget-nav-btn active" data-tab="leaderboard">Leaderboard</button>
+            <button id="btn-schedule" class="pga-widget-nav-btn" data-tab="schedule">Schedule</button>
+            <button id="btn-stats" class="pga-widget-nav-btn" data-tab="stats">Stats</button>
+            <button id="btn-fedex" class="pga-widget-nav-btn" data-tab="fedex">FedExCup</button>
+            <button id="btn-info" class="pga-widget-nav-btn" data-tab="info">Tour Info</button>
+        </div>
+
+        <div style="padding: 20px;">
+            <div id="pga-tab-leaderboard" class="pga-widget-tab-content active">
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+                <div class="pga-widget-iframe-container" style="position: relative; width: 100%; height: 800px; overflow: auto; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <iframe src="https://www.pgatour.com/leaderboard" style="width: 100%; height: 100%; border: none;" title="PGA Tour Leaderboard"></iframe>
+                </div>
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+                <div style="background-color: #f0f7ff; border-radius: 10px; padding: 20px; margin-top: 20px; border-left: 5px solid #0A3559;">
+                    <div style="font-weight: bold; margin-bottom: 15px; color: #0a3559; font-size: 18px;">How to Use the Leaderboard</div>
+                    <p style="margin-bottom: 12px; font-size: 15px; line-height: 1.5; color: #555;">The live leaderboard shows real-time scores and standings for the current PGA TOUR tournament.</p>
+                    <ul style="padding-left: 20px; margin-bottom: 15px; font-size: 15px; line-height: 1.5; color: #555; list-style-type: disc;">
+                        <li style="margin-bottom: 8px;"><b>Player Scores:</b> View player positions, current scores relative to par, and round-by-round details.</li>
+                        <li style="margin-bottom: 8px;"><b>Sorting:</b> Click on column headers to sort the leaderboard by different criteria.</li>
+                        <li style="margin-bottom: 8px;"><b>Player Details:</b> Click on a player's name to see their detailed statistics.</li>
+                        <li style="margin-bottom: 8px;"><b>Cut Line:</b> In tournaments with cuts, a horizontal line indicates the cut position.</li>
+                    </ul>
+                    <p style="font-size: 15px; font-style: italic; color: #555;"><b>Note:</b> You may need to accept cookies when first viewing the leaderboard iframe content from pgatour.com.</p>
+                </div>
+            </div>
+
+            <div id="pga-tab-schedule" class="pga-widget-tab-content">
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+                <div class="pga-widget-iframe-container" style="position: relative; width: 100%; height: 800px; overflow: auto; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <div class="pga-widget-loading" style="text-align: center; padding: 50px 20px; font-size: 16px; color: #666;">Loading tournament schedule...</div>
+                    <iframe src="about:blank" data-src="https://www.pgatour.com/schedule" style="width: 100%; height: 100%; border: none; display: none;" title="PGA Tour Schedule"></iframe>
+                </div>
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+            </div>
+
+            <div id="pga-tab-stats" class="pga-widget-tab-content">
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+                <div class="pga-widget-iframe-container" style="position: relative; width: 100%; height: 800px; overflow: auto; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <div class="pga-widget-loading" style="text-align: center; padding: 50px 20px; font-size: 16px; color: #666;">Loading player statistics...</div>
+                    <iframe src="about:blank" data-src="https://www.pgatour.com/stats/leaders" style="width: 100%; height: 100%; border: none; display: none;" title="PGA Tour Stats Leaders"></iframe>
+                </div>
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+            </div>
+
+            <div id="pga-tab-fedex" class="pga-widget-tab-content">
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+                <div class="pga-widget-iframe-container" style="position: relative; width: 100%; height: 800px; overflow: auto; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <div class="pga-widget-loading" style="text-align: center; padding: 50px 20px; font-size: 16px; color: #666;">Loading FedExCup standings...</div>
+                    <iframe src="about:blank" data-src="https://www.pgatour.com/fedexcup/standings" style="width: 100%; height: 100%; border: none; display: none;" title="PGA Tour FedExCup Standings"></iframe>
+                </div>
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+            </div>
+
+            <div id="pga-tab-info" class="pga-widget-tab-content">
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <div style="font-size: 24px; font-weight: bold; margin-bottom: 15px; color: #0a3559; border-bottom: 3px solid #F7B432; padding-bottom: 8px;">About PGA TOUR</div>
+                    <p style="margin-bottom: 20px; line-height: 1.6; font-size: 16px; color: #333;">The PGA TOUR is the premier professional golf tour in the United States and North America, organizing the main professional golf tournaments. Founded in 1968, the PGA TOUR has become the world's premier membership organization for touring professional golfers, co-sanctioning more than 130 tournaments on the PGA TOUR, PGA TOUR Champions, Korn Ferry Tour, PGA TOUR Latinoamérica and PGA TOUR Canada.</p>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 25px; margin: 25px 0;">
+                        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eee;">
+                            <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #0a3559; display: flex; align-items: center;"><span style="margin-right: 10px; font-size: 24px;">💰</span> Prize Money Distribution</div>
+                            <p style="margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333;">Prize money in PGA TOUR events is distributed as follows:</p>
+                            <ul style="padding-left: 25px; margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333; list-style-type: disc;">
+                                <li style="margin-bottom: 10px;"><b>Winner:</b> Typically receives 18% of the total purse (around $1.44 million for a standard $8 million purse).</li>
+                                <li style="margin-bottom: 10px;"><b>Runner-up:</b> Approximately 10.9% of the purse (around $872,000).</li>
+                                <li style="margin-bottom: 10px;"><b>Third place:</b> Around 6.9% of the purse (around $552,000).</li>
+                                <li style="margin-bottom: 10px;"><b>Distribution:</b> All players who make the cut receive a portion of the prize money, with amounts decreasing as you go down the leaderboard.</li>
+                                <li style="margin-bottom: 10px;"><b>Minimum payout:</b> Even the lowest finisher who makes the cut receives prize money (around 0.2% of the purse, or $16,000).</li>
+                            </ul>
+                            <p style="line-height: 1.6; font-size: 16px; color: #333;">Tournament purses for regular PGA TOUR events typically range from $7-9 million, while signature events can offer purses of $20 million and higher. Major championships also feature larger purses, often exceeding $15 million.</p>
+                        </div>
+                        <div class="pga-widget-ad-container">
+                            <!-- 광고 자리 -->
+                        </div>
+                        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eee;">
+                            <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #0a3559; display: flex; align-items: center;"><span style="margin-right: 10px; font-size: 24px;">✂️</span> Cut System</div>
+                            <p style="margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333;">The cut is a standard feature in most PGA TOUR events to narrow the field for the final rounds:</p>
+                            <ul style="padding-left: 25px; margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333; list-style-type: disc;">
+                                <li style="margin-bottom: 10px;"><b>Standard cut rule:</b> Top 65 players and ties advance to the weekend rounds (changed from top 70 in 2019).</li>
+                                <li style="margin-bottom: 10px;"><b>Cut timing:</b> Made after 36 holes (the first two rounds).</li>
+                                <li style="margin-bottom: 10px;"><b>No-cut events:</b> Some tournaments like signature events, the TOUR Championship, and limited-field events don't have cuts.</li>
+                                <li style="margin-bottom: 10px;"><b>Secondary cut:</b> In rare cases when too many players make the cut, a secondary cut (MDF - Made Cut, Did Not Finish) may occur after the third round.</li>
+                                <li style="margin-bottom: 10px;"><b>Amateurs:</b> Amateur players can make the cut but cannot receive prize money.</li>
+                            </ul>
+                            <p style="line-height: 1.6; font-size: 16px; color: #333;">Players who miss the cut do not earn prize money or FedExCup points for that tournament, and they do not play the final two rounds.</p>
+                        </div>
+                        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eee;">
+                            <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #0a3559; display: flex; align-items: center;"><span style="margin-right: 10px; font-size: 24px;">🏆</span> FedExCup Points System</div>
+                            <p style="margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333;">The FedExCup is the PGA TOUR's season-long championship that culminates in the playoffs:</p>
+                            <ul style="padding-left: 25px; margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333; list-style-type: disc;">
+                                <li style="margin-bottom: 10px;"><b>Regular events:</b> 500 points to the winner, with points decreasing down the leaderboard.</li>
+                                <li style="margin-bottom: 10px;"><b>Signature events:</b> 700 points to the winner.</li>
+                                <li style="margin-bottom: 10px;"><b>Major championships:</b> 600 points to the winner.</li>
+                                <li style="margin-bottom: 10px;"><b>The Players Championship:</b> 600 points to the winner.</li>
+                                <li style="margin-bottom: 10px;"><b>Playoffs:</b> Points are increased during the FedExCup Playoffs (e.g., 2,000 points to the winner in playoff events).</li>
+                                <li style="margin-bottom: 10px;"><b>TOUR Championship:</b> The finale features a strokes-based scoring system where the FedExCup leader starts at -10.</li>
+                            </ul>
+                            <p style="line-height: 1.6; font-size: 16px; color: #333;">The FedExCup champion earns a significant bonus (e.g., $18 million from a $75 million pool) and a 5-year PGA TOUR exemption. The top players in the final FedExCup standings retain their tour cards.</p>
+                        </div>
+                        <div class="pga-widget-ad-container">
+                            <!-- 광고 자리 -->
+                        </div>
+                        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eee;">
+                            <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #0a3559; display: flex; align-items: center;"><span style="margin-right: 10px; font-size: 24px;">📅</span> Tournament Format</div>
+                            <p style="margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333;">Most PGA TOUR events follow a standard format:</p>
+                            <ul style="padding-left: 25px; margin-bottom: 15px; line-height: 1.6; font-size: 16px; color: #333; list-style-type: disc;">
+                                <li style="margin-bottom: 10px;"><b>Duration:</b> 4 rounds (72 holes) of stroke play, typically Thursday through Sunday.</li>
+                                <li style="margin-bottom: 10px;"><b>Field size:</b> Usually 132-156 players.</li>
+                                <li style="margin-bottom: 10px;"><b>Par:</b> Typically 70-72 for most courses.</li>
+                                <li style="margin-bottom: 10px;"><b>Pro-Am:</b> Many tournaments include a Pro-Am event on Wednesday where professionals play alongside amateurs.</li>
+                                <li style="margin-bottom: 10px;"><b>Special formats:</b> Some tournaments have unique formats:
+                                    <ul style="margin-top: 8px; padding-left: 20px; list-style-type: circle;">
+                                        <li>Zurich Classic (team play)</li>
+                                        <li>WGC-Dell Match Play (match play format - *Note: format/event status may change year to year*)</li>
+                                        <li>The Genesis Invitational (limited field of 120 players)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p style="line-height: 1.6; font-size: 16px; color: #333;">The player with the lowest total score after all rounds wins the tournament. In case of a tie after 72 holes, a playoff is conducted to determine the winner, usually in a sudden-death format.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pga-widget-ad-container">
+                    <!-- 광고 자리 -->
+                </div>
+            </div>
+        </div>
+
+        <div style="background-color: #0a3559; color: white; padding: 15px; text-align: center; font-size: 14px; border-top: 1px solid #1A4569;">
+            <div>Last updated: <span id="pga-widget-update-time"></span> | Data provided by PGA TOUR</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function initWidget() {
+                console.log('PGA Tour Widget: Initializing...');
+                
+                // 탭 버튼과 콘텐츠 요소 가져오기
+                const navButtons = document.querySelectorAll('#pga-tour-widget-container .pga-widget-nav-btn');
+                const tabContents = document.querySelectorAll('#pga-tour-widget-container .pga-widget-tab-content');
+                
+                // 탭 전환 함수
+                function showTab(tabId) {
+                    console.log(`Showing tab: ${tabId}`);
+                    
+                    // 모든 탭 숨기고 버튼 비활성화
+                    tabContents.forEach(tab => {
+                        tab.style.display = 'none';
+                        tab.classList.remove('active');
+                    });
+                    
+                    navButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // 선택된 탭 표시 및 버튼 활성화
+                    const selectedTab = document.getElementById(`pga-tab-${tabId}`);
+                    const selectedBtn = document.querySelector(`#pga-tour-widget-container [data-tab="${tabId}"]`);
+                    
+                    if (selectedTab && selectedBtn) {
+                        selectedTab.style.display = 'block';
+                        selectedTab.classList.add('active');
+                        selectedBtn.classList.add('active');
+                        
+                        // iframe 로딩 (처음 탭 열 때만)
+                        const iframe = selectedTab.querySelector('iframe');
+                        const loading = selectedTab.querySelector('.pga-widget-loading');
+                        
+                        if (iframe && iframe.src === 'about:blank' && iframe.dataset.src) {
+                            if (loading) loading.style.display = 'block';
+                            iframe.style.display = 'none';
+                            
+                            iframe.onload = function() {
+                                console.log('iframe loaded');
+                                if (loading) loading.style.display = 'none';
+                                iframe.style.display = 'block';
+                            };
+                            
+                            iframe.onerror = function() {
+                                console.error('iframe load error');
+                                if (loading) loading.textContent = 'Error loading content. Please try again.';
+                            };
+                            
+                            // iframe 소스 설정
+                            iframe.src = iframe.dataset.src;
+                        }
+                    }
+                }
+                
+                // 버튼 클릭 이벤트 리스너 추가
+                navButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const tabId = this.getAttribute('data-tab');
+                        showTab(tabId);
+                    });
+                });
+                
+                // 날짜 업데이트 함수
+                function updateTime() {
+                    const timeEl = document.getElementById('pga-widget-update-time');
+                    if (timeEl) {
+                        timeEl.textContent = new Date().toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        });
+                    }
+                }
+                
+                // 초기 탭 설정
+                showTab('leaderboard');
+                
+                // 시간 업데이트
+                updateTime();
+                setInterval(updateTime, 5 * 60 * 1000);
+            }
+            
+            // 위젯 초기화
+            initWidget();
+        });
+    </script>
+</body>
+</html>
