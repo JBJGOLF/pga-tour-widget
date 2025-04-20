@@ -1,0 +1,304 @@
+#pga-tour-widget-container * {
+    box-sizing: border-box;
+}
+#pga-tour-widget-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    border: 1px solid #e0e0e0;
+}
+#pga-tour-widget-container .pga-widget-tab-content {
+    display: none;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+#pga-tour-widget-container .pga-widget-tab-content.active {
+    display: block;
+    z-index: 2;
+}
+#pga-tour-widget-container .pga-widget-nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px;
+    background-color: #f5f5f5;
+    gap: 8px;
+    z-index: 10001;
+    position: relative;
+}
+#pga-tour-widget-container .pga-widget-nav-btn {
+    cursor: pointer;
+    z-index: 10002;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #0A3559 0%, #1A4569 100%);
+    color: white;
+    border: 1px solid #F7B432;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    flex: 1;
+    min-width: 110px;
+    text-align: center;
+    padding: 12px 8px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+    pointer-events: auto;
+}
+#pga-tour-widget-container .pga-widget-nav-btn.wide-btn {
+    flex: 2;
+}
+#pga-tour-widget-container .pga-widget-nav-btn:hover,
+#pga-tour-widget-container .pga-widget-nav-btn:focus {
+    background: linear-gradient(135deg, #1A4569 0%, #0A3559 100%);
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    outline: none;
+}
+#pga-tour-widget-container .pga-widget-nav-btn.active {
+    background: linear-gradient(135deg, #F7B432 0%, #D89E2A 100%);
+    color: #0A3559;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+#pga-tour-widget-container .pga-widget-ad-container {
+    padding: 15px;
+    background-color: #f9f9f9;
+    text-align: center;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 20px 0;
+    width: 100%;
+}
+#pga-tour-widget-container .pga-widget-header {
+    background: linear-gradient(135deg, #0A3559 0%, #1A4569 100%);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 4px solid #F7B432;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+#pga-tour-widget-container .pga-widget-logo-container {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 20px;
+    perspective: 1000px;
+}
+#pga-tour-widget-container .pga-widget-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #F7B432;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+#pga-tour-widget-container .pga-widget-logo svg {
+    width: 85%;
+    height: 85%;
+}
+#pga-tour-widget-container .pga-widget-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #F7B432;
+    margin: 0;
+}
+#pga-tour-widget-container .pga-widget-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: #FFFFFF;
+    opacity: 0.9;
+    margin-top: 8px;
+}
+#pga-tour-widget-container .pga-content-box {
+    width: 100%;
+    margin: 20px 0;
+    background-color: #fff;
+}
+#pga-tour-widget-container .pga-widget-info-box {
+    background-color: #f0f7ff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 5px solid #0A3559;
+    width: 100%;
+}
+#pga-tour-widget-container .pga-widget-info-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #0a3559;
+    font-size: 18px;
+}
+#pga-tour-widget-container .pga-widget-info-box p {
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #555;
+}
+#pga-tour-widget-container .pga-widget-info-box ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #555;
+    list-style-type: disc;
+}
+#pga-tour-widget-container .pga-widget-info-box li {
+    margin-bottom: 8px;
+}
+#pga-tour-widget-container .pga-tour-info-container {
+    width: 100%;
+    padding: 0;
+}
+#pga-tour-widget-container .pga-info-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #0a3559;
+    border-bottom: 3px solid #F7B432;
+    padding-bottom: 8px;
+}
+#pga-tour-widget-container .pga-tour-info-container p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #333;
+}
+#pga-tour-widget-container .pga-info-box {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 25px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+    width: 100%;
+}
+#pga-tour-widget-container .pga-info-box-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #0a3559;
+    display: flex;
+    align-items: center;
+}
+#pga-tour-widget-container .pga-emoji {
+    margin-right: 10px;
+    font-size: 24px;
+}
+#pga-tour-widget-container .pga-info-box p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #333;
+}
+#pga-tour-widget-container .pga-info-box ul {
+    padding-left: 25px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #333;
+    list-style-type: disc;
+}
+#pga-tour-widget-container .pga-info-box li {
+    margin-bottom: 10px;
+}
+#pga-tour-widget-container .pga-info-box ul ul {
+    margin-top: 8px;
+    padding-left: 20px;
+    list-style-type: circle;
+}
+#pga-tour-widget-container .pga-widget-footer {
+    background-color: #0a3559;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #1A4569;
+}
+
+/* Media Query */
+@media (max-width: 768px) {
+    #pga-tour-widget-container .pga-widget-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 8px;
+    }
+    #pga-tour-widget-container .pga-widget-nav-btn {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px 6px;
+        min-width: auto;
+        margin: 0;
+    }
+    #pga-tour-widget-container .pga-widget-nav-btn[data-tab="leaderboard"] {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    #pga-tour-widget-container .pga-widget-nav-btn[data-tab="schedule"] {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    #pga-tour-widget-container .pga-widget-nav-btn[data-tab="stats"] {
+        grid-column: 1;
+        grid-row: 2;
+    }
+    #pga-tour-widget-container .pga-widget-nav-btn[data-tab="fedex"] {
+        grid-column: 2;
+        grid-row: 2;
+    }
+    #pga-tour-widget-container .pga-widget-nav-btn[data-tab="info"] {
+        grid-column: 1 / span 2;
+        grid-row: 3;
+    }
+    #pga-tour-widget-container .pga-widget-title {
+        font-size: 24px;
+    }
+    #pga-tour-widget-container .pga-widget-subtitle {
+        font-size: 16px;
+    }
+    #pga-tour-widget-container .pga-widget-logo {
+        width: 80px;
+        height: 80px;
+    }
+    #pga-tour-widget-container .pga-info-box {
+        padding: 15px;
+    }
+    #pga-tour-widget-container .pga-info-box-title {
+        font-size: 18px;
+    }
+    #pga-tour-widget-container .pga-info-section-title {
+        font-size: 20px;
+    }
+    #pga-tour-widget-container #leaderboard-frame,
+    #pga-tour-widget-container #schedule-frame,
+    #pga-tour-widget-container #stats-frame,
+    #pga-tour-widget-container #fedex-frame {
+        height: 500px !important;  /* 500px로 고정 및 !important로 우선 적용 */
+        min-height: 500px;  /* 최소 높이도 500px로 설정 */
+        max-height: 500px;  /* 최대 높이도 500px로 제한 */
+    }
+    #pga-tour-widget-container .pga-stats-categories {
+        flex-direction: column;
+    }
+    #pga-tour-widget-container .pga-fedex-cutoffs {
+        flex-direction: column;
+    }
+}
+
